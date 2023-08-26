@@ -5,12 +5,19 @@ import { nanoid } from 'nanoid';
 
 export class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
     name: '',
+    number: '',
   };
   handlerChange = evt => {
     this.setState({
-      name: evt.target.value,
+      [evt.target.name]: evt.target.value,
     });
   };
   handlerSubmit = evt => {
@@ -18,9 +25,11 @@ export class App extends Component {
     this.setState(prevState => {
       return {
         name: '',
+        number: '',
+        filter: '',
         contacts: [
           ...prevState.contacts,
-          { id: nanoid(), name: prevState.name },
+          { id: nanoid(), name: prevState.name, number: prevState.number },
         ],
       };
     });
@@ -31,9 +40,13 @@ export class App extends Component {
         <PhoneBookForm
           handlerSubmit={this.handlerSubmit}
           handlerChange={this.handlerChange}
-          inputValue={this.state.name}
+          inputValue={this.state}
         />
-        <Contacts contacts={this.state.contacts} />
+        <Contacts
+          contacts={this.state.contacts}
+          handlerChange={this.handlerChange}
+          filter={this.state.filter}
+        />
       </>
     );
   }
