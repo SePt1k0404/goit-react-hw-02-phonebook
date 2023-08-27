@@ -1,22 +1,19 @@
-export const Contacts = ({ contacts, handlerChange, filter }) => {
+import { ContactsItem } from './ContactsItem';
+import { ContactsList, ContactsListItem } from './Contacts.styled';
+
+export const Contacts = ({ contacts, deleteContact }) => {
   const contactsArr = contacts.map(el => (
-    <li key={el.id}>
-      {el.name} {el.number}
-    </li>
+    <ContactsListItem key={el.id}>
+      <ContactsItem
+        name={el.name}
+        number={el.number}
+        deleteContact={deleteContact}
+      />
+    </ContactsListItem>
   ));
   return (
     <>
-      <h2>Contacts</h2>
-      <label>
-        Find contacts by name
-        <input
-          type="text"
-          name="filter"
-          value={filter}
-          onChange={handlerChange}
-        />
-      </label>
-      <ul>{contactsArr}</ul>
+      <ContactsList>{contactsArr}</ContactsList>
     </>
   );
 };
